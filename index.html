@@ -342,10 +342,10 @@
       <!-- ── MEJORA P2-C: Suite extendida de presets ───────────────────── -->
       <div class="mt-5 flex flex-wrap gap-2 items-center">
         <!-- Fila 1: presets principales -->
-        <button data-preset="all" class="presetBtn chip px-4 py-2 rounded-full text-sm hover:bg-white/10 is-active">Todo</button>
+        <button data-preset="all" class="presetBtn chip px-4 py-2 rounded-full text-sm hover:bg-white/10">Todo</button>
         <button data-preset="mtd" class="presetBtn chip px-4 py-2 rounded-full text-sm hover:bg-white/10">MTD</button>
         <button data-preset="qtd" class="presetBtn chip px-4 py-2 rounded-full text-sm hover:bg-white/10">QTD</button>
-        <button data-preset="ytd" class="presetBtn chip px-4 py-2 rounded-full text-sm hover:bg-white/10">YTD</button>
+        <button data-preset="ytd" class="presetBtn chip px-4 py-2 rounded-full text-sm hover:bg-white/10 is-active">YTD</button>
         <button data-preset="l12m" class="presetBtn chip px-4 py-2 rounded-full text-sm hover:bg-white/10">L12M</button>
         <span class="text-white/20 text-xs select-none">|</span>
         <button data-preset="q1" class="presetBtn chip px-3 py-2 rounded-full text-sm hover:bg-white/10">Q1</button>
@@ -361,7 +361,7 @@
         <div class="ml-auto flex items-center gap-2">
           <input id="excelFile" type="file" accept=".xlsx,.xls" class="hidden">
           <button id="loadExcelBtn" class="chip px-4 py-2 rounded-full text-sm hover:bg-white/10 border border-white/10">Cargar Excel</button>
-          <button id="restoreEmbeddedBtn" class="chip px-4 py-2 rounded-full text-sm hover:bg-white/10 border border-white/10">Restaurar embebido</button>
+          <button id="restoreEmbeddedBtn" class="chip px-4 py-2 rounded-full text-sm hover:bg-white/10 border border-white/10 hidden">Restaurar embebido</button>
           <button id="exportHtmlBtn" class="chip px-4 py-2 rounded-full text-sm hover:bg-white/10 border border-white/10">Exportar HTML</button>
           <button id="resetFilters" class="chip px-4 py-2 rounded-full text-sm hover:bg-white/10 border-indigo-500/40">Reset</button>
         </div>
@@ -2309,7 +2309,8 @@ const selMonths = getSelectedMonthNames();
       render();
 
       setDataSourceLabel(label);
-      if ($restoreEmbeddedBtn) $restoreEmbeddedBtn.classList.remove('hidden');
+      // Opción A: restoreEmbeddedBtn permanece oculto (hidden no se elimina tras cargar Excel)
+      // if ($restoreEmbeddedBtn) $restoreEmbeddedBtn.classList.remove('hidden');
     }
 
     async function handleExcelFile(file) {
