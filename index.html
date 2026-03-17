@@ -24,6 +24,104 @@
       background: rgba(255,255,255,0.06);
       border: 1px solid rgba(255,255,255,0.10);
     }
+    /* Mejora 1 — Preset activo */
+    .presetBtn.is-active {
+      background: rgba(99,102,241,0.18);
+      border-color: rgba(99,102,241,0.55);
+      color: #a5b4fc;
+      font-weight: 600;
+    }
+    /* Mejora 2 — Badge filtros activos */
+    #activeFiltersBadge {
+      display: none;
+      align-items: center;
+      gap: 4px;
+      font-size: 11px;
+      font-weight: 700;
+      color: #a5b4fc;
+      background: rgba(99,102,241,0.15);
+      border: 1px solid rgba(99,102,241,0.35);
+      border-radius: 9999px;
+      padding: 3px 10px;
+      white-space: nowrap;
+    }
+    #activeFiltersBadge.visible { display: inline-flex; }
+    /* Mejora 4 — Contador inline buscador cliente */
+    #clientMatchInfo {
+      position: absolute;
+      right: 10px;
+      top: 50%;
+      transform: translateY(-50%);
+      font-size: 10px;
+      font-weight: 600;
+      color: #6b7280;
+      pointer-events: none;
+      white-space: nowrap;
+    }
+    #clientMatchInfo.has-results { color: #a5b4fc; }
+    #clientMatchInfo.no-results  { color: #f43f5e; }
+    /* Mejora 5 — Validación visual inversión de fechas */
+    .date-range-error input[type="date"] {
+      border-color: rgba(244, 63, 94, 0.7) !important;
+      background: rgba(244, 63, 94, 0.07) !important;
+    }
+    #dateRangeError {
+      display: none;
+      font-size: 11px;
+      color: #f43f5e;
+      font-weight: 600;
+      margin-top: 4px;
+      gap: 4px;
+      align-items: center;
+    }
+    #dateRangeError.visible { display: flex; }
+    /* Mejora 7 — Colapso level2/level3 cuando level1 = Todos */
+    #level23Row {
+      transition: opacity 0.2s ease, max-height 0.25s ease;
+      overflow: hidden;
+    }
+    #level23Row.levels-collapsed {
+      opacity: 0.35;
+      pointer-events: none;
+    }
+    #level23Row .levels-hint {
+      display: none;
+      font-size: 11px;
+      color: #6b7280;
+      margin-top: 4px;
+      font-style: italic;
+    }
+    #level23Row.levels-collapsed .levels-hint { display: block; }
+    /* Mejora 9 — Toggle visual "Solo abierto" separado */
+    #openOnlyToggleWrap {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      padding: 6px 12px;
+      border-radius: 9999px;
+      border: 1px solid rgba(255,255,255,0.10);
+      background: rgba(255,255,255,0.06);
+      cursor: pointer;
+      user-select: none;
+      transition: border-color 0.15s, background 0.15s;
+      font-size: 0.875rem;
+      white-space: nowrap;
+    }
+    #openOnlyToggleWrap:hover { background: rgba(255,255,255,0.10); }
+    #openOnlyToggleWrap.open-active {
+      background: rgba(244, 63, 94, 0.14);
+      border-color: rgba(244, 63, 94, 0.50);
+      color: #fda4af;
+      font-weight: 600;
+    }
+    #openOnlyToggleWrap .open-dot {
+      width: 8px; height: 8px;
+      border-radius: 50%;
+      background: #6b7280;
+      flex-shrink: 0;
+      transition: background 0.15s;
+    }
+    #openOnlyToggleWrap.open-active .open-dot { background: #f43f5e; }
     .scrollbar-thin::-webkit-scrollbar { height: 8px; width: 8px; }
     .scrollbar-thin::-webkit-scrollbar-thumb { background: rgba(148,163,184,0.35); border-radius: 999px; }
     .scrollbar-thin::-webkit-scrollbar-track { background: rgba(255,255,255,0.04); border-radius: 999px; }
@@ -158,7 +256,7 @@
 <body class="p-4 md:p-8" data-initial-view="sales">
   <header class="max-w-7xl mx-auto mb-8 flex flex-col md:flex-row justify-between items-start md:items-end gap-6">
     <div>
-      <h1 class="text-4xl font-bold tracking-tight">Lexa <span class="text-indigo-500 underline decoration-indigo-500/30">Creatives</span></h1>
+      <h1 class="text-4xl font-bold tracking-tight">Lexa</h1>
       <p class="text-gray-400 mt-2 text-lg">Sales Dashboard<span class="text-gray-300"> </span></p>
          </div>
 
@@ -177,7 +275,7 @@
 
     <div class="mt-4 md:mt-0 md:ml-auto flex items-center gap-2">
       <button id="viewSalesBtn" class="px-4 py-2 rounded-lg text-sm font-semibold border border-white/10 hover:bg-white/15 transition bg-white/10">Ventas</button>
-      <button id="viewBudgetBtn" class="px-4 py-2 rounded-lg text-sm font-semibold border border-white/10 hover:bg-white/10 transition bg-white/5">Presupuesto</button>
+      <button id="viewBudgetBtn" class="px-4 py-2 rounded-lg text-sm font-semibold border border-white/10 hover:bg-white/10 transition bg-white/5">Objetivos</button>
     </div>
 
   </header>
@@ -189,18 +287,29 @@
 <section class="glass-card p-6">
       <div class="flex flex-col lg:flex-row gap-6 lg:items-end">
         <div class="flex-1">
-          <h2 class="text-lg font-semibold">Filtros</h2>
+          <div class="flex items-center gap-3">
+            <h2 class="text-lg font-semibold">Filtros</h2>
+            <span id="activeFiltersBadge" aria-live="polite" class="visible">2 filtros activos</span>
+          </div>
           <p class="text-sm text-gray-400 mt-1"></p>
         </div>
 
         <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-5 gap-4 w-full">
           <div>
             <label class="text-xs uppercase tracking-widest text-gray-500 font-semibold">Desde</label>
-            <input id="dateFrom" type="date" class="mt-2 w-full bg-white/5 border border-white/10 rounded-lg px-3 py-2 text-sm outline-none focus:ring-2 focus:ring-indigo-500/50">
+            <div id="dateRangeWrap" class="mt-2">
+              <input id="dateFrom" type="date" class="w-full bg-white/5 border border-white/10 rounded-lg px-3 py-2 text-sm outline-none focus:ring-2 focus:ring-indigo-500/50">
+            </div>
           </div>
           <div>
             <label class="text-xs uppercase tracking-widest text-gray-500 font-semibold">Hasta</label>
-            <input id="dateTo" type="date" class="mt-2 w-full bg-white/5 border border-white/10 rounded-lg px-3 py-2 text-sm outline-none focus:ring-2 focus:ring-indigo-500/50">
+            <div class="mt-2">
+              <input id="dateTo" type="date" class="w-full bg-white/5 border border-white/10 rounded-lg px-3 py-2 text-sm outline-none focus:ring-2 focus:ring-indigo-500/50">
+              <div id="dateRangeError" role="alert" aria-live="assertive">
+                <svg width="12" height="12" viewBox="0 0 12 12" fill="none" style="flex-shrink:0"><circle cx="6" cy="6" r="5.5" stroke="#f43f5e"></circle><path d="M6 3.5v3M6 8h.01" stroke="#f43f5e" stroke-width="1.2" stroke-linecap="round"></path></svg>
+                Fecha inicio posterior a fecha fin
+              </div>
+            </div>
           </div>
 
           <div>
@@ -215,7 +324,8 @@
 
           <div class="relative">
             <label class="text-xs uppercase tracking-widest text-gray-500 font-semibold">Buscar Cliente</label>
-            <input id="clientSearch" type="text" placeholder="Nike, Loewe, ..." autocomplete="off" class="mt-2 w-full bg-white/5 border border-white/10 rounded-lg px-3 py-2 text-sm outline-none focus:ring-2 focus:ring-indigo-500/50">
+            <input id="clientSearch" type="text" placeholder="Nike, Loewe, ..." autocomplete="off" class="mt-2 w-full bg-white/5 border border-white/10 rounded-lg px-3 py-2 text-sm outline-none focus:ring-2 focus:ring-indigo-500/50" style="padding-right:80px">
+            <span id="clientMatchInfo" aria-live="polite" class=""></span>
             <!-- Autocomplete -->
             <div id="clientSuggest" class="absolute z-50 mt-2 w-full rounded-xl border border-white/10 bg-white shadow-xl overflow-hidden hidden">
               <ul id="clientSuggestList" class="max-h-64 overflow-auto" role="listbox" aria-label="Sugerencias de cliente"></ul>
@@ -225,11 +335,15 @@
         </div>
       </div>
 
-      <div class="mt-5 flex flex-wrap gap-2">
+      <div class="mt-5 flex flex-wrap gap-2 items-center">
         <button data-preset="all" class="presetBtn chip px-4 py-2 rounded-full text-sm hover:bg-white/10">Todo</button>
         <button data-preset="ytd" class="presetBtn chip px-4 py-2 rounded-full text-sm hover:bg-white/10">YTD (año actual)</button>
         <button data-preset="last90" class="presetBtn chip px-4 py-2 rounded-full text-sm hover:bg-white/10">Últimos 90 días</button>
-        <button data-preset="open" class="presetBtn chip px-4 py-2 rounded-full text-sm hover:bg-white/10">Solo abierto (Pendiente/Vencido)</button>
+        <!-- Mejora 9: toggle independiente para solo abierto -->
+        <button id="openOnlyToggleWrap" type="button" aria-pressed="false" title="Filtra sólo facturas Pendientes y Vencidas, compatible con cualquier rango de fecha" class="">
+          <span class="open-dot"></span>
+          Solo abierto
+        </button>
         <div class="ml-auto flex items-center gap-2">
           <input id="excelFile" type="file" accept=".xlsx,.xls" class="hidden">
           <button id="loadExcelBtn" class="chip px-4 py-2 rounded-full text-sm hover:bg-white/10 border border-white/10">Cargar Excel</button>
@@ -239,25 +353,16 @@
         </div>
       </div>
 
-      <div class="mt-4 grid grid-cols-1 md:grid-cols-3 gap-4">
+      <div id="level23Row" class="mt-4 grid grid-cols-1 md:grid-cols-2 gap-4 levels-collapsed">
         <div>
           <label class="text-xs uppercase tracking-widest text-gray-500 font-semibold">Nivel 2 (Línea de Ingresos)</label>
           <select id="level2" class="mt-2 w-full bg-white/5 border border-white/10 rounded-lg px-3 py-2 text-sm outline-none focus:ring-2 focus:ring-indigo-500/50"><option value="__all__">Todos</option><option value="Otros">Otros</option><option value="Partnership - Cuentas">Partnership - Cuentas</option><option value="Partnership - Talento">Partnership - Talento</option><option value="PRs - Cuentas PR">PRs - Cuentas PR</option></select>
+          <p class="levels-hint">Selecciona Nivel 1 para filtrar</p>
         </div>
         <div>
           <label class="text-xs uppercase tracking-widest text-gray-500 font-semibold">Nivel 3 (Modelo de Ingresos)</label>
           <select id="level3" class="mt-2 w-full bg-white/5 border border-white/10 rounded-lg px-3 py-2 text-sm outline-none focus:ring-2 focus:ring-indigo-500/50"><option value="__all__">Todos</option><option value="Acción">Acción</option><option value="One Shot">One Shot</option><option value="Otros">Otros</option><option value="Retainer - Anual">Retainer - Anual</option><option value="Retainer - Mensual">Retainer - Mensual</option><option value="Retainer - Seasonal">Retainer - Seasonal</option></select>
-        </div>
-        <div>
-          <label class="text-xs uppercase tracking-widest text-gray-500 font-semibold">Ordenar tabla</label>
-          <select id="sortBy" class="mt-2 w-full bg-white/5 border border-white/10 rounded-lg px-3 py-2 text-sm outline-none focus:ring-2 focus:ring-indigo-500/50">
-            <option value="date_desc">Fecha (desc)</option>
-            <option value="date_asc">Fecha (asc)</option>
-            <option value="amount_desc">Subtotal (desc)</option>
-            <option value="amount_asc">Subtotal (asc)</option>
-            <option value="due_desc">Vencimiento (desc)</option>
-            <option value="due_asc">Vencimiento (asc)</option>
-          </select>
+          <p class="levels-hint">Selecciona Nivel 2 para filtrar</p>
         </div>
       </div>
     </section>
@@ -307,7 +412,7 @@
           <h4 class="text-xl font-semibold">Evolución mensual</h4>
           <span class="text-xs text-gray-400">Fecha factura</span>
         </div>
-        <div style="height: 320px;"><canvas id="monthlyChart" width="566" height="320" style="display: block; box-sizing: border-box; height: 320px; width: 566px;"></canvas></div>
+        <div style="height: 320px;"><canvas id="monthlyChart" width="790" height="480" style="display: block; box-sizing: border-box; height: 320px; width: 527px;"></canvas></div>
       </div>
 
       <!-- Columna derecha -->
@@ -316,7 +421,7 @@
           <h4 class="text-xl font-semibold">Ingresos x B.Unit</h4>
           <span class="text-xs text-gray-400">Total acumulado</span>
         </div>
-        <div style="height: 320px;"><canvas id="lvl12StackChart" width="566" height="320" style="display: block; box-sizing: border-box; height: 320px; width: 566px;"></canvas></div>
+        <div style="height: 320px;"><canvas id="lvl12StackChart" width="790" height="480" style="display: block; box-sizing: border-box; height: 320px; width: 527px;"></canvas></div>
       </div>
     </section>
 
@@ -327,7 +432,7 @@
           <h4 class="text-xl font-semibold">Ingresos x B.Unit Detallado</h4>
           <span class="text-xs text-gray-400">Total acumulado</span>
         </div>
-        <div style="height: 320px;"><canvas id="buChart" width="566" height="320" style="display: block; box-sizing: border-box; height: 320px; width: 566px;"></canvas></div>
+        <div style="height: 320px;"><canvas id="buChart" width="790" height="480" style="display: block; box-sizing: border-box; height: 320px; width: 527px;"></canvas></div>
       </div>
 
       <!-- Columna derecha -->
@@ -336,7 +441,7 @@
           <h4 class="text-xl font-semibold">Distribución por Modelo de Ingresos</h4>
           <span class="text-xs text-gray-400">Retainers / Acción / One Shot</span>
         </div>
-        <div style="height: 320px;"><canvas id="mixChart" width="566" height="320" style="display: block; box-sizing: border-box; height: 320px; width: 566px;"></canvas></div>
+        <div style="height: 320px;"><canvas id="mixChart" width="790" height="480" style="display: block; box-sizing: border-box; height: 320px; width: 527px;"></canvas></div>
       </div>
     </section>
 
@@ -346,7 +451,7 @@
           <h4 class="text-xl font-semibold">Aging de Cuentas a Cobrar</h4>
           <span class="text-xs text-gray-400">Solo facturas vencidas</span>
         </div>
-        <div style="height: 220px;"><canvas id="agingChart" width="1222" height="220" style="display: block; box-sizing: border-box; height: 220px; width: 1222px;"></canvas></div>
+        <div style="height: 220px;"><canvas id="agingChart" width="1715" height="330" style="display: block; box-sizing: border-box; height: 220px; width: 1143.3px;"></canvas></div>
         <div class="mt-6">
           <div class="flex items-end justify-between gap-4 mb-3">
             <div>
@@ -377,84 +482,84 @@
         <tr class="hover:bg-white/5">
           <td class="py-3 pr-4 pl-3 text-gray-200 max-w-[420px] truncate">NIKE RETAIL SUCURSAL EN ESPAÑA</td>
           <td class="py-3 pr-4 text-right font-semibold">57.000&nbsp;€</td>
-          <td class="py-3 pr-4 text-right text-gray-300">1</td>
+          <td class="py-3 pr-4 text-right text-gray-300">2</td>
           <td class="py-3 pr-4 text-right text-gray-300">1-30</td>
         </tr>
       
         <tr class="hover:bg-white/5">
           <td class="py-3 pr-4 pl-3 text-gray-200 max-w-[420px] truncate">LCI BARCELONA ESCUELA SUPERIOR SLU</td>
           <td class="py-3 pr-4 text-right font-semibold">54.750&nbsp;€</td>
-          <td class="py-3 pr-4 text-right text-gray-300">16</td>
+          <td class="py-3 pr-4 text-right text-gray-300">17</td>
           <td class="py-3 pr-4 text-right text-gray-300">1-30</td>
         </tr>
       
         <tr class="hover:bg-white/5">
           <td class="py-3 pr-4 pl-3 text-gray-200 max-w-[420px] truncate">B360 PRODUCCIONS, S.L.</td>
           <td class="py-3 pr-4 text-right font-semibold">22.500&nbsp;€</td>
-          <td class="py-3 pr-4 text-right text-gray-300">20</td>
+          <td class="py-3 pr-4 text-right text-gray-300">21</td>
           <td class="py-3 pr-4 text-right text-gray-300">1-30</td>
         </tr>
       
         <tr class="hover:bg-white/5">
           <td class="py-3 pr-4 pl-3 text-gray-200 max-w-[420px] truncate">CBPARIS GROUP LTD</td>
           <td class="py-3 pr-4 text-right font-semibold">20.000&nbsp;€</td>
-          <td class="py-3 pr-4 text-right text-gray-300">45</td>
+          <td class="py-3 pr-4 text-right text-gray-300">46</td>
           <td class="py-3 pr-4 text-right text-gray-300">31-60</td>
         </tr>
       
         <tr class="hover:bg-white/5">
           <td class="py-3 pr-4 pl-3 text-gray-200 max-w-[420px] truncate">CHLOE CAILLET LLC</td>
           <td class="py-3 pr-4 text-right font-semibold">4.000&nbsp;€</td>
-          <td class="py-3 pr-4 text-right text-gray-300">44</td>
+          <td class="py-3 pr-4 text-right text-gray-300">45</td>
           <td class="py-3 pr-4 text-right text-gray-300">31-60</td>
         </tr>
       
         <tr class="hover:bg-white/5">
           <td class="py-3 pr-4 pl-3 text-gray-200 max-w-[420px] truncate">JIMMY FAIRLY SPAIN SL</td>
           <td class="py-3 pr-4 text-right font-semibold">4.000&nbsp;€</td>
-          <td class="py-3 pr-4 text-right text-gray-300">44</td>
+          <td class="py-3 pr-4 text-right text-gray-300">45</td>
           <td class="py-3 pr-4 text-right text-gray-300">31-60</td>
         </tr>
       
         <tr class="hover:bg-white/5">
           <td class="py-3 pr-4 pl-3 text-gray-200 max-w-[420px] truncate">SAS ASSEMBLY SH</td>
           <td class="py-3 pr-4 text-right font-semibold">3.385&nbsp;€</td>
-          <td class="py-3 pr-4 text-right text-gray-300">44</td>
+          <td class="py-3 pr-4 text-right text-gray-300">45</td>
           <td class="py-3 pr-4 text-right text-gray-300">31-60</td>
         </tr>
       
         <tr class="hover:bg-white/5">
           <td class="py-3 pr-4 pl-3 text-gray-200 max-w-[420px] truncate">MID Summer Productions, SL</td>
           <td class="py-3 pr-4 text-right font-semibold">3.000&nbsp;€</td>
-          <td class="py-3 pr-4 text-right text-gray-300">1</td>
+          <td class="py-3 pr-4 text-right text-gray-300">2</td>
           <td class="py-3 pr-4 text-right text-gray-300">1-30</td>
         </tr>
       
         <tr class="hover:bg-white/5">
           <td class="py-3 pr-4 pl-3 text-gray-200 max-w-[420px] truncate">ONII SAKANA (SAS)</td>
           <td class="py-3 pr-4 text-right font-semibold">1.500&nbsp;€</td>
-          <td class="py-3 pr-4 text-right text-gray-300">16</td>
+          <td class="py-3 pr-4 text-right text-gray-300">17</td>
           <td class="py-3 pr-4 text-right text-gray-300">1-30</td>
         </tr>
       
         <tr class="hover:bg-white/5">
           <td class="py-3 pr-4 pl-3 text-gray-200 max-w-[420px] truncate">OJ-SAN (SAS)</td>
           <td class="py-3 pr-4 text-right font-semibold">1.500&nbsp;€</td>
-          <td class="py-3 pr-4 text-right text-gray-300">16</td>
+          <td class="py-3 pr-4 text-right text-gray-300">17</td>
           <td class="py-3 pr-4 text-right text-gray-300">1-30</td>
         </tr>
       
         <tr class="hover:bg-white/5">
           <td class="py-3 pr-4 pl-3 text-gray-200 max-w-[420px] truncate">ISABELLA GUTIERREZ GONZALEZ</td>
           <td class="py-3 pr-4 text-right font-semibold">1.000&nbsp;€</td>
-          <td class="py-3 pr-4 text-right text-gray-300">44</td>
+          <td class="py-3 pr-4 text-right text-gray-300">45</td>
           <td class="py-3 pr-4 text-right text-gray-300">31-60</td>
         </tr>
       
         <tr class="hover:bg-white/5">
           <td class="py-3 pr-4 pl-3 text-gray-200 max-w-[420px] truncate">VAMPIRE STUDIO SL</td>
           <td class="py-3 pr-4 text-right font-semibold">230&nbsp;€</td>
-          <td class="py-3 pr-4 text-right text-gray-300">20</td>
+          <td class="py-3 pr-4 text-right text-gray-300">21</td>
           <td class="py-3 pr-4 text-right text-gray-300">1-30</td>
         </tr>
       </tbody>
@@ -500,7 +605,7 @@
                 <h4 id="drillTitle" class="text-lg font-semibold">Nivel 1</h4>
                 <div class="text-xs text-gray-400">Click para hacer zoom in</div>
               </div>
-              <div style="height: 420px;"><canvas id="drillTreemap" style="box-sizing: border-box; display: block; height: 420px; width: 772.7px;" width="772" height="420"></canvas></div>
+              <div style="height: 420px;"><canvas id="drillTreemap" style="box-sizing: border-box; display: block; height: 420px; width: 720.9px;" width="1081" height="630"></canvas></div>
             </div>
           </div>
 
@@ -1231,7 +1336,7 @@ function parseDate(s) {
       status: "__all__",
       clientSearch: "",
       presetOpenOnly: false,
-      sortBy: "date_desc",
+
       page: 1, pageSize: 15,
       view: "sales",
     };
@@ -1243,7 +1348,7 @@ function parseDate(s) {
     const $level3 = document.getElementById('level3');
     const $status = document.getElementById('status');
     const $clientSearch = document.getElementById('clientSearch');
-    const $sortBy = document.getElementById('sortBy');
+
 
     // Autocomplete (Buscar Cliente)
     const $clientSuggest = document.getElementById('clientSuggest');
@@ -2332,6 +2437,7 @@ const selMonths = getSelectedMonthNames();
       btn.addEventListener('click', () => applyPreset(btn.dataset.preset));
     });
     document.getElementById('resetFilters').addEventListener('click', () => {
+      updateActivePreset('all'); // Mejora 1: reset lands on "all" state
       initDefaults();
       render();
     });
@@ -2342,10 +2448,11 @@ const selMonths = getSelectedMonthNames();
       _renderTimer = setTimeout(render, 180);
     }
 
-    [$dateFrom, $dateTo, $level1, $level2, $level3, $status, $clientSearch, $sortBy].forEach(el => {
+    [$dateFrom, $dateTo, $level1, $level2, $level3, $status, $clientSearch].forEach(el => {
       el.addEventListener('input', () => {
         state.page = 1;
         syncStateFromUI();
+        updateActivePreset(null); // Mejora 1: manual change clears preset highlight
         debouncedRender();
       });
     });
@@ -2400,7 +2507,7 @@ const selMonths = getSelectedMonthNames();
       state.level3 = $level3.value;
       state.status = $status.value;
       state.clientSearch = ($clientSearch.value || "").trim().toLowerCase();
-      state.sortBy = $sortBy.value;
+
     }
 
     function uniq(arr) {
@@ -2447,7 +2554,7 @@ const selMonths = getSelectedMonthNames();
       $level3.value = "__all__";
       $status.value = "__all__";
       $clientSearch.value = "";
-      $sortBy.value = "date_desc";
+
 
       state.presetOpenOnly = false;
       syncStateFromUI();
@@ -2463,27 +2570,27 @@ const selMonths = getSelectedMonthNames();
         $dateFrom.value = minD.toISOString().slice(0,10);
         $dateTo.value = maxD.toISOString().slice(0,10);
         $status.value = "__all__";
+        // Mejora 9: "all" reset also clears the open-only toggle
         state.presetOpenOnly = false;
       }
       if (preset === "ytd") {
         const y = today.getFullYear();
         $dateFrom.value = `${y}-01-01`;
         $dateTo.value = maxD.toISOString().slice(0,10);
-        state.presetOpenOnly = false;
+        // Mejora 9: date presets do NOT touch presetOpenOnly — toggle is independent
       }
       if (preset === "last90") {
         const d = new Date(today);
         d.setDate(d.getDate() - 90);
         $dateFrom.value = d.toISOString().slice(0,10);
         $dateTo.value = maxD.toISOString().slice(0,10);
-        state.presetOpenOnly = false;
+        // Mejora 9: date presets do NOT touch presetOpenOnly — toggle is independent
       }
-      if (preset === "open") {
-        state.presetOpenOnly = true;
-      }
+      // NOTE: "open" case removed — now handled by #openOnlyToggleWrap (Mejora 9)
 
       state.page = 1;
       syncStateFromUI();
+      updateActivePreset(preset); // Mejora 1
       render();
     }
 
@@ -2801,17 +2908,6 @@ if (!mixChart) {
       }
     }
 
-    function sortRows(rows) {
-      const copy = [...rows];
-      const key = state.sortBy;
-      const dir = key.endsWith('_asc') ? 1 : -1;
-      return copy.sort((a,b) => {
-        if (key.startsWith('date_')) return (parseDate(a.Fecha) - parseDate(b.Fecha)) * dir;
-        if (key.startsWith('due_')) return (parseDate(a.Vencimiento) - parseDate(b.Vencimiento)) * dir;
-        if (key.startsWith('amount_')) return (Number(a.Subtotal) - Number(b.Subtotal)) * dir;
-        return 0;
-      });
-    }
 
     function badge(status) {
       const map = {
@@ -3485,11 +3581,155 @@ backgroundColor(ctx) {
       if (document.activeElement === $clientSearch) {
         renderClientSuggest();
       }
+
+      // ── UX improvements (mejoras 1–4) ──────────────────────────────────
+      updateFilterUX(rows);
+    }
+
+    // =========================================================
+    // UX IMPROVEMENTS 1–4
+    // =========================================================
+
+    // Cached DOM refs for UX improvements
+    const $activeFiltersBadge = document.getElementById('activeFiltersBadge');
+    const $clientMatchInfo    = document.getElementById('clientMatchInfo');
+
+    /**
+     * Master UX updater — called at the end of every render().
+     * Coordinates improvements 1, 2 and 4.
+     * Improvement 3 (preset active state) is set inside applyPreset/initDefaults hooks below.
+     */
+    function updateFilterUX(filteredRows) {
+      updateActiveFiltersBadge(); // Mejora 2
+      updateClientMatchInfo(filteredRows); // Mejora 4
+      updateDateRangeValidation(); // Mejora 5
+      updateLevel23Collapse(); // Mejora 7
+      updateOpenOnlyToggle(); // Mejora 9
+    }
+
+    // ── Mejora 2: Badge "N filtros activos" ──────────────────────────────
+    function countActiveFilters() {
+      let count = 0;
+      // Date range: only count if different from the full dataset range
+      const dates    = RAW.map(r => parseDate(r.Fecha));
+      const minD     = new Date(dates.reduce((a, b) => Math.min(a, b)));
+      const maxD     = new Date(dates.reduce((a, b) => Math.max(a, b)));
+      const fromVal  = $dateFrom.value;
+      const toVal    = $dateTo.value;
+      if (fromVal && fromVal !== minD.toISOString().slice(0, 10)) count++;
+      if (toVal   && toVal   !== maxD.toISOString().slice(0, 10)) count++;
+      // Selects
+      if ($level1.value !== '__all__') count++;
+      if ($level2.value !== '__all__') count++;
+      if ($level3.value !== '__all__') count++;
+      if ($status.value !== '__all__') count++;
+      // Text search
+      if (($clientSearch.value || '').trim() !== '') count++;
+      // Preset "solo abierto"
+      if (state.presetOpenOnly) count++;
+      return count;
+    }
+
+    function updateActiveFiltersBadge() {
+      if (!$activeFiltersBadge) return;
+      const n = countActiveFilters();
+      if (n === 0) {
+        $activeFiltersBadge.classList.remove('visible');
+        $activeFiltersBadge.textContent = '';
+      } else {
+        $activeFiltersBadge.classList.add('visible');
+        $activeFiltersBadge.textContent = n === 1 ? '1 filtro activo' : `${n} filtros activos`;
+      }
+    }
+
+    // ── Mejora 4: Contador inline en buscador cliente ────────────────────
+    function updateClientMatchInfo(filteredRows) {
+      if (!$clientMatchInfo) return;
+      const query = ($clientSearch.value || '').trim();
+      if (!query) {
+        $clientMatchInfo.textContent = '';
+        $clientMatchInfo.className = '';
+        return;
+      }
+      const matchingClients = new Set(filteredRows.map(r => r.Cliente).filter(Boolean));
+      const nClients  = matchingClients.size;
+      const nInvoices = filteredRows.length;
+      if (nInvoices === 0) {
+        $clientMatchInfo.textContent = 'sin resultados';
+        $clientMatchInfo.className = 'no-results';
+      } else {
+        $clientMatchInfo.textContent = `${nInvoices} fact · ${nClients} cliente${nClients !== 1 ? 's' : ''}`;
+        $clientMatchInfo.className = 'has-results';
+      }
+    }
+
+    // ── Mejora 1: Preset activo con highlight ────────────────────────────
+    // Determines which preset (if any) matches the current state and marks it.
+    function updateActivePreset(activePreset) {
+      document.querySelectorAll('.presetBtn').forEach(btn => {
+        btn.classList.toggle('is-active', btn.dataset.preset === activePreset);
+      });
+    }
+
+    // =========================================================
+    // UX IMPROVEMENTS 5, 7, 9
+    // =========================================================
+
+    // ── Mejora 5: Validación visual inversión de fechas ──────────────────
+    const $dateRangeError = document.getElementById('dateRangeError');
+    const $dateRangeWrap  = document.getElementById('dateRangeWrap');
+
+    function updateDateRangeValidation() {
+      if (!$dateRangeError || !$dateFrom || !$dateTo) return;
+      const from = $dateFrom.value;
+      const to   = $dateTo.value;
+      const inverted = from && to && from > to;
+
+      // Error message below dateTo
+      $dateRangeError.classList.toggle('visible', !!inverted);
+
+      // Red border on both inputs
+      const grid = $dateFrom.closest('.grid');
+      if (grid) {
+        grid.classList.toggle('date-range-error', !!inverted);
+      }
+    }
+
+    // ── Mejora 7: Colapso visual de level2/level3 cuando level1 = Todos ──
+    const $level23Row = document.getElementById('level23Row');
+
+    function updateLevel23Collapse() {
+      if (!$level23Row || !$level1) return;
+      const l1Active = $level1.value !== '__all__';
+      // level2 siempre visible pero colapsado visualmente si level1 = Todos
+      $level23Row.classList.toggle('levels-collapsed', !l1Active);
+    }
+
+    // ── Mejora 9: Toggle "Solo abierto" independiente ────────────────────
+    // The button now lives outside the presetBtn group — it toggles
+    // state.presetOpenOnly directly without touching the date preset.
+    const $openOnlyToggle = document.getElementById('openOnlyToggleWrap');
+
+    function updateOpenOnlyToggle() {
+      if (!$openOnlyToggle) return;
+      const active = !!state.presetOpenOnly;
+      $openOnlyToggle.classList.toggle('open-active', active);
+      $openOnlyToggle.setAttribute('aria-pressed', String(active));
+    }
+
+    if ($openOnlyToggle) {
+      $openOnlyToggle.addEventListener('click', () => {
+        state.presetOpenOnly = !state.presetOpenOnly;
+        state.page = 1;
+        // "Solo abierto" is orthogonal to date presets — do NOT clear preset highlight
+        render();
+      });
     }
 
     initSelectors();
     initDefaults();
     initDrillUI();
+    updateActivePreset('all'); // Mejora 1: initial state matches "all"
     render();
     initBudgetTimeControls();
 
