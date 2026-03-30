@@ -264,7 +264,7 @@
 
     <div class="flex gap-4 w-full md:w-auto">
       <div class="glass-card px-6 py-4 text-center w-1/2 md:w-auto">
-        <span class="text-[11px] uppercase text-gray-500 font-semibold block tracking-widest">Total</span>
+        <span class="text-[11px] uppercase text-gray-500 font-semibold block tracking-widest">Revenue Total</span>
         <span id="kpiTotal" class="text-2xl font-bold text-white tracking-tight">4.239.882&nbsp;€</span>
         <div class="text-xs text-gray-400 mt-1"># Facturas: <span id="kpiCount" class="text-gray-200 font-semibold">513</span></div>
       </div>
@@ -317,7 +317,7 @@
           </div>
 
           <div>
-            <label class="text-xs uppercase tracking-widest text-gray-500 font-semibold">Nivel 1 (B. Units)</label>
+            <label class="text-xs uppercase tracking-widest text-gray-500 font-semibold">Nivel 1 (División)</label>
             <select id="level1" class="mt-2 w-full bg-white/5 border border-white/10 rounded-lg px-3 py-2 text-sm outline-none focus:ring-2 focus:ring-indigo-500/50"><option value="__all__">Todos</option><option value="Otros">Otros</option><option value="Partnership">Partnership</option><option value="PRs">PRs</option></select>
           </div>
 
@@ -369,12 +369,12 @@
 
       <div id="level23Row" class="mt-4 grid grid-cols-1 md:grid-cols-2 gap-4 levels-collapsed">
         <div>
-          <label class="text-xs uppercase tracking-widest text-gray-500 font-semibold">Nivel 2 (Línea de Ingresos)</label>
+          <label class="text-xs uppercase tracking-widest text-gray-500 font-semibold">Nivel 2 (Servicios)</label>
           <select id="level2" class="mt-2 w-full bg-white/5 border border-white/10 rounded-lg px-3 py-2 text-sm outline-none focus:ring-2 focus:ring-indigo-500/50"><option value="__all__">Todos</option><option value="Otros">Otros</option><option value="Partnership - Cuentas">Partnership - Cuentas</option><option value="Partnership - Talento">Partnership - Talento</option><option value="PRs - Cuentas PR">PRs - Cuentas PR</option></select>
           <p class="levels-hint">Selecciona Nivel 1 para filtrar</p>
         </div>
         <div>
-          <label class="text-xs uppercase tracking-widest text-gray-500 font-semibold">Nivel 3 (Modelo de Ingresos)</label>
+          <label class="text-xs uppercase tracking-widest text-gray-500 font-semibold">Nivel 3 (Tipo de Contrato)</label>
           <select id="level3" class="mt-2 w-full bg-white/5 border border-white/10 rounded-lg px-3 py-2 text-sm outline-none focus:ring-2 focus:ring-indigo-500/50"><option value="__all__">Todos</option><option value="Acción">Acción</option><option value="One Shot">One Shot</option><option value="Otros">Otros</option><option value="Retainer - Anual">Retainer - Anual</option><option value="Retainer - Mensual">Retainer - Mensual</option><option value="Retainer - Seasonal">Retainer - Seasonal</option></select>
           <p class="levels-hint">Selecciona Nivel 2 para filtrar</p>
         </div>
@@ -432,7 +432,7 @@
       <!-- Columna derecha -->
       <div class="glass-card p-7">
         <div class="flex items-center justify-between mb-4">
-          <h4 class="text-xl font-semibold">Ingresos x B.Unit</h4>
+          <h4 class="text-xl font-semibold">Revenue por División</h4>
           <span class="text-xs text-gray-400">Total acumulado</span>
         </div>
         <div style="height: 320px;"><canvas id="lvl12StackChart" width="790" height="480" style="display: block; box-sizing: border-box; height: 320px; width: 527px;"></canvas></div>
@@ -443,7 +443,7 @@
       <!-- Columna izquierda -->
       <div class="glass-card p-7">
         <div class="flex items-center justify-between mb-4">
-          <h4 class="text-xl font-semibold">Ingresos x B.Unit Detallado</h4>
+          <h4 class="text-xl font-semibold">Ranking de Servicios</h4>
           <span class="text-xs text-gray-400">Total acumulado</span>
         </div>
         <div style="height: 320px;"><canvas id="buChart" width="790" height="480" style="display: block; box-sizing: border-box; height: 320px; width: 527px;"></canvas></div>
@@ -452,8 +452,8 @@
       <!-- Columna derecha -->
       <div class="glass-card p-7">
         <div class="flex items-center justify-between mb-4">
-          <h4 class="text-xl font-semibold">Distribución por Modelo de Ingresos</h4>
-          <span class="text-xs text-gray-400">Retainers / Acción / One Shot</span>
+          <h4 class="text-xl font-semibold">Distribución contractual</h4>
+          <span class="text-xs text-gray-400">Retainer / Proyecto / Fee único</span>
         </div>
         <div style="height: 320px;"><canvas id="mixChart" width="790" height="480" style="display: block; box-sizing: border-box; height: 320px; width: 527px;"></canvas></div>
       </div>
@@ -638,7 +638,7 @@
       <div class="flex flex-col lg:flex-row lg:items-end lg:justify-between gap-4">
         <div>
           <h3 class="text-2xl font-semibold">Análisis Multidimensional de Ingresos · Zoom in / Zoom out</h3>
-          <p class="text-sm text-gray-400 mt-1">Explora los Ingresos por Unidad de Negocio, Línea de Ingresos y Modelo de Ingresos</p>
+          <p class="text-sm text-gray-400 mt-1">Explora los Ingresos por División, Servicios y Tipo de Contrato</p>
         </div>
 
         <div class="flex items-center gap-2">
@@ -998,7 +998,7 @@
     <div class="flex flex-col lg:flex-row lg:items-end lg:justify-between gap-4">
       <div>
         <h2 class="text-2xl font-semibold">Objetivos 2026 · Seguimiento Real vs Plan (PO)</h2>
-        <p class="text-sm text-gray-400 mt-1">Analiza el desempeño Real vs Presupuesto</p>
+        <p class="text-sm text-gray-400 mt-1">Analiza el desempeño Real vs Objetivos</p>
       </div>
       <div class="text-xs text-gray-500"> </div>
     </div>
@@ -1036,8 +1036,8 @@
         <div class="rounded-2xl border border-white/10 bg-white/5 p-4">
           <div class="flex items-end justify-between gap-4 mb-3">
             <div>
-              <h4 class="text-lg font-semibold">Tendencia mensual · Real vs Presupuesto</h4>
-              <p class="text-xs text-gray-400 mt-1">Evolución mensual de ingresos comparando Real vs PO</p>
+              <h4 class="text-lg font-semibold">Tendencia mensual · Real vs Objetivos</h4>
+              <p class="text-xs text-gray-400 mt-1">Evolución mensual de ingresos</p>
             </div>
           </div>
           <div class="h-[300px]">
@@ -1048,8 +1048,8 @@
         <div class="rounded-2xl border border-white/10 bg-white/5 p-4">
           <div class="flex items-end justify-between gap-4 mb-3">
             <div>
-              <h4 class="text-lg font-semibold">Desviación por Business Unit</h4>
-              <p class="text-xs text-gray-400 mt-1">Comparativa de ingresos Real vs PO por Unidad de Negocio</p>
+              <h4 class="text-lg font-semibold">Desviación por Servicios</h4>
+              <p class="text-xs text-gray-400 mt-1">Comparativa de ingresos Real vs Objetivos por Línea de Negocio</p>
             </div>
           </div>
           <div class="h-[300px]">
@@ -1061,7 +1061,7 @@
       <div class="rounded-2xl border border-white/10 bg-white/5 p-4 mt-6">
         <div class="flex items-end justify-between gap-4 mb-3">
   <div>
-    <h4 class="text-lg font-semibold">Detalle por Unidad de Negocio · Real vs PO</h4>
+    <h4 class="text-lg font-semibold">Detalle por Línea de Negocio · Real vs Objetivos</h4>
     <p class="text-xs text-gray-400 mt-1">Vista comparativa para identificar desviaciones y oportunidades: <span id="budgetPeriodLabel" class="text-gray-200 font-semibold">Full Year</span>
     </p>
   </div>
@@ -1102,11 +1102,11 @@
 </div>
         <div class="overflow-auto max-h-[360px] rounded-xl border border-white/10">
           <table class="min-w-full text-sm">
-            <thead>
+            <thead class="sticky top-0 z-10 bg-[#0B0B10]">
               <tr class="text-gray-500 border-b border-white/10 text-xs uppercase tracking-widest">
-                <th class="py-3 pr-4 pl-3 font-semibold">BU</th>
+                <th class="py-3 pr-4 pl-3 font-semibold">Línea de Negocio</th>
                 <th class="py-3 pr-4 font-semibold text-right">Real</th>
-                <th class="py-3 pr-4 font-semibold text-right">PO</th>
+                <th class="py-3 pr-4 font-semibold text-right">Objetivos</th>
                 <th class="py-3 pr-4 font-semibold text-right">Var</th>
                 <th class="py-3 pr-4 font-semibold text-right">% </th>
               </tr>
