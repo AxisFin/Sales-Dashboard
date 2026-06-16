@@ -350,7 +350,7 @@
         <span class="text-[11px] uppercase text-gray-500 font-semibold block tracking-widest">Revenue Total</span>
         <span id="kpiTotal" class="text-2xl font-bold text-white tracking-tight">1.923.935&nbsp;€</span>
         <div class="text-xs text-gray-400 mt-1"># Facturas: <span id="kpiCount" class="text-gray-200 font-semibold">175</span></div>
-        <div id="kpiYoY" class="text-xs mt-1 font-semibold"><span style="color:#10b981">▲ +18.7% vs año anterior</span> <span class="text-gray-500">(1.620.609&nbsp;€)</span></div>
+        <div id="kpiYoY" class="text-xs mt-1 font-semibold"><span style="color:#10b981">▲ +10.2% vs año anterior</span> <span class="text-gray-500">(1.746.298&nbsp;€)</span></div>
       </div>
       <div class="glass-card px-6 py-4 text-center w-1/2 md:w-auto border-indigo-500/50">
         <span class="text-[11px] uppercase text-gray-500 font-semibold block tracking-widest">Cobrado vs Pendiente</span>
@@ -469,9 +469,9 @@
         </button>
         <div class="ml-auto flex items-center gap-2">
           <input id="excelFile" type="file" accept=".xlsx,.xls" class="hidden">
-          <button id="loadExcelBtn" class="chip px-4 py-2 rounded-full text-sm hover:bg-white/10 border border-white/10">Cargar Excel</button>
+          <button id="loadExcelBtn" class="chip px-4 py-2 rounded-full text-sm hover:bg-white/10 border border-white/10 hidden">Cargar Excel</button>
           <button id="restoreEmbeddedBtn" class="chip px-4 py-2 rounded-full text-sm hover:bg-white/10 border border-white/10 hidden">Restaurar embebido</button>
-          <button id="exportHtmlBtn" class="chip px-4 py-2 rounded-full text-sm hover:bg-white/10 border border-white/10">Exportar HTML</button>
+          <button id="exportHtmlBtn" class="chip px-4 py-2 rounded-full text-sm hover:bg-white/10 border border-white/10 hidden">Exportar HTML</button>
           <button id="resetFilters" class="chip px-4 py-2 rounded-full text-sm hover:bg-white/10 border-indigo-500/40">Reset</button>
         </div>
       </div>
@@ -522,7 +522,7 @@
 
       <div class="glass-card p-6 border-l-4 border-pink-500">
         <p class="text-sm text-gray-400 font-medium">Riesgo (AR)</p>
-        <h3 id="kpiOverdue" class="text-3xl font-bold mt-1">227.882&nbsp;€</h3>
+        <h3 id="kpiOverdue" class="text-3xl font-bold mt-1">235.882&nbsp;€</h3>
         <p class="text-xs text-pink-300 mt-2 italic">Importe vencido · Plazo cobro: <span id="kpiDSO" class="font-semibold text-pink-200" style="color: rgb(244, 63, 94);">66</span> días <span id="kpiDSOTooltip" title="DSO = (AR abierto 774.522&nbsp;€ / Revenue 1.923.935&nbsp;€) × 163 días del período = 66 días. Benchmark sector: 30-60 días." class="cursor-help text-gray-500">ⓘ</span></p>
       </div>
     </section>
@@ -605,133 +605,140 @@
         <tr class="hover:bg-white/5">
           <td class="py-3 pr-4 pl-3 text-gray-200 max-w-[420px] truncate">GAP INC</td>
           <td class="py-3 pr-4 text-right font-semibold">105.182&nbsp;€</td>
-          <td class="py-3 pr-4 text-right text-gray-300">15</td>
+          <td class="py-3 pr-4 text-right text-gray-300">17</td>
           <td class="py-3 pr-4 text-right text-gray-300">1-30</td>
         </tr>
       
         <tr class="hover:bg-white/5">
           <td class="py-3 pr-4 pl-3 text-gray-200 max-w-[420px] truncate">B360 PRODUCCIONS, S.L.</td>
           <td class="py-3 pr-4 text-right font-semibold">22.500&nbsp;€</td>
-          <td class="py-3 pr-4 text-right text-gray-300">109</td>
+          <td class="py-3 pr-4 text-right text-gray-300">111</td>
           <td class="py-3 pr-4 text-right text-gray-300">90+</td>
         </tr>
       
         <tr class="hover:bg-white/5">
           <td class="py-3 pr-4 pl-3 text-gray-200 max-w-[420px] truncate">LUXOTTICA SPAIN S.L.U</td>
           <td class="py-3 pr-4 text-right font-semibold">20.710&nbsp;€</td>
-          <td class="py-3 pr-4 text-right text-gray-300">9</td>
+          <td class="py-3 pr-4 text-right text-gray-300">11</td>
           <td class="py-3 pr-4 text-right text-gray-300">1-30</td>
         </tr>
       
         <tr class="hover:bg-white/5">
           <td class="py-3 pr-4 pl-3 text-gray-200 max-w-[420px] truncate">NIKE RETAIL BV</td>
           <td class="py-3 pr-4 text-right font-semibold">14.630&nbsp;€</td>
-          <td class="py-3 pr-4 text-right text-gray-300">26</td>
+          <td class="py-3 pr-4 text-right text-gray-300">28</td>
           <td class="py-3 pr-4 text-right text-gray-300">1-30</td>
         </tr>
       
         <tr class="hover:bg-white/5">
           <td class="py-3 pr-4 pl-3 text-gray-200 max-w-[420px] truncate">NIKE INC</td>
           <td class="py-3 pr-4 text-right font-semibold">12.000&nbsp;€</td>
-          <td class="py-3 pr-4 text-right text-gray-300">2</td>
+          <td class="py-3 pr-4 text-right text-gray-300">4</td>
           <td class="py-3 pr-4 text-right text-gray-300">1-30</td>
         </tr>
       
         <tr class="hover:bg-white/5">
           <td class="py-3 pr-4 pl-3 text-gray-200 max-w-[420px] truncate">CBPARIS GROUP LTD</td>
           <td class="py-3 pr-4 text-right font-semibold">10.000&nbsp;€</td>
-          <td class="py-3 pr-4 text-right text-gray-300">14</td>
+          <td class="py-3 pr-4 text-right text-gray-300">16</td>
+          <td class="py-3 pr-4 text-right text-gray-300">1-30</td>
+        </tr>
+      
+        <tr class="hover:bg-white/5">
+          <td class="py-3 pr-4 pl-3 text-gray-200 max-w-[420px] truncate">MONTIREX LTD.</td>
+          <td class="py-3 pr-4 text-right font-semibold">8.000&nbsp;€</td>
+          <td class="py-3 pr-4 text-right text-gray-300">1</td>
           <td class="py-3 pr-4 text-right text-gray-300">1-30</td>
         </tr>
       
         <tr class="hover:bg-white/5">
           <td class="py-3 pr-4 pl-3 text-gray-200 max-w-[420px] truncate">JIMMY FAIRLY SPAIN SL</td>
           <td class="py-3 pr-4 text-right font-semibold">6.000&nbsp;€</td>
-          <td class="py-3 pr-4 text-right text-gray-300">45</td>
+          <td class="py-3 pr-4 text-right text-gray-300">47</td>
           <td class="py-3 pr-4 text-right text-gray-300">31-60</td>
         </tr>
       
         <tr class="hover:bg-white/5">
           <td class="py-3 pr-4 pl-3 text-gray-200 max-w-[420px] truncate">ADRIÁN MILLS</td>
           <td class="py-3 pr-4 text-right font-semibold">5.177&nbsp;€</td>
-          <td class="py-3 pr-4 text-right text-gray-300">76</td>
+          <td class="py-3 pr-4 text-right text-gray-300">78</td>
           <td class="py-3 pr-4 text-right text-gray-300">61-90</td>
         </tr>
       
         <tr class="hover:bg-white/5">
           <td class="py-3 pr-4 pl-3 text-gray-200 max-w-[420px] truncate">SAS LE 142 (SAS LE 142)</td>
           <td class="py-3 pr-4 text-right font-semibold">4.500&nbsp;€</td>
-          <td class="py-3 pr-4 text-right text-gray-300">45</td>
+          <td class="py-3 pr-4 text-right text-gray-300">47</td>
           <td class="py-3 pr-4 text-right text-gray-300">31-60</td>
         </tr>
       
         <tr class="hover:bg-white/5">
           <td class="py-3 pr-4 pl-3 text-gray-200 max-w-[420px] truncate">L'OREAL ESPAÑA SA</td>
           <td class="py-3 pr-4 text-right font-semibold">3.960&nbsp;€</td>
-          <td class="py-3 pr-4 text-right text-gray-300">57</td>
+          <td class="py-3 pr-4 text-right text-gray-300">59</td>
           <td class="py-3 pr-4 text-right text-gray-300">31-60</td>
         </tr>
       
         <tr class="hover:bg-white/5">
           <td class="py-3 pr-4 pl-3 text-gray-200 max-w-[420px] truncate">CARRER WORLD SL</td>
           <td class="py-3 pr-4 text-right font-semibold">3.800&nbsp;€</td>
-          <td class="py-3 pr-4 text-right text-gray-300">60</td>
-          <td class="py-3 pr-4 text-right text-gray-300">31-60</td>
+          <td class="py-3 pr-4 text-right text-gray-300">62</td>
+          <td class="py-3 pr-4 text-right text-gray-300">61-90</td>
         </tr>
       
         <tr class="hover:bg-white/5">
           <td class="py-3 pr-4 pl-3 text-gray-200 max-w-[420px] truncate">SAS ASSEMBLY SH</td>
           <td class="py-3 pr-4 text-right font-semibold">3.385&nbsp;€</td>
-          <td class="py-3 pr-4 text-right text-gray-300">133</td>
+          <td class="py-3 pr-4 text-right text-gray-300">135</td>
           <td class="py-3 pr-4 text-right text-gray-300">90+</td>
         </tr>
       
         <tr class="hover:bg-white/5">
           <td class="py-3 pr-4 pl-3 text-gray-200 max-w-[420px] truncate">ISABELLA GUTIERREZ GONZALEZ</td>
           <td class="py-3 pr-4 text-right font-semibold">3.000&nbsp;€</td>
-          <td class="py-3 pr-4 text-right text-gray-300">133</td>
+          <td class="py-3 pr-4 text-right text-gray-300">135</td>
           <td class="py-3 pr-4 text-right text-gray-300">90+</td>
         </tr>
       
         <tr class="hover:bg-white/5">
           <td class="py-3 pr-4 pl-3 text-gray-200 max-w-[420px] truncate">OJ-SAN (SAS)</td>
           <td class="py-3 pr-4 text-right font-semibold">3.000&nbsp;€</td>
-          <td class="py-3 pr-4 text-right text-gray-300">105</td>
+          <td class="py-3 pr-4 text-right text-gray-300">107</td>
           <td class="py-3 pr-4 text-right text-gray-300">90+</td>
         </tr>
       
         <tr class="hover:bg-white/5">
           <td class="py-3 pr-4 pl-3 text-gray-200 max-w-[420px] truncate">EMMA ROGUE LLC</td>
           <td class="py-3 pr-4 text-right font-semibold">2.609&nbsp;€</td>
-          <td class="py-3 pr-4 text-right text-gray-300">133</td>
+          <td class="py-3 pr-4 text-right text-gray-300">135</td>
           <td class="py-3 pr-4 text-right text-gray-300">90+</td>
         </tr>
       
         <tr class="hover:bg-white/5">
           <td class="py-3 pr-4 pl-3 text-gray-200 max-w-[420px] truncate">ASSEMBLY SH (ASSEMBLY SH)</td>
           <td class="py-3 pr-4 text-right font-semibold">2.500&nbsp;€</td>
-          <td class="py-3 pr-4 text-right text-gray-300">45</td>
+          <td class="py-3 pr-4 text-right text-gray-300">47</td>
           <td class="py-3 pr-4 text-right text-gray-300">31-60</td>
         </tr>
       
         <tr class="hover:bg-white/5">
           <td class="py-3 pr-4 pl-3 text-gray-200 max-w-[420px] truncate">CHLOE CAILLET LLC</td>
           <td class="py-3 pr-4 text-right font-semibold">2.000&nbsp;€</td>
-          <td class="py-3 pr-4 text-right text-gray-300">15</td>
+          <td class="py-3 pr-4 text-right text-gray-300">17</td>
           <td class="py-3 pr-4 text-right text-gray-300">1-30</td>
         </tr>
       
         <tr class="hover:bg-white/5">
           <td class="py-3 pr-4 pl-3 text-gray-200 max-w-[420px] truncate">ONII SAKANA (SAS)</td>
           <td class="py-3 pr-4 text-right font-semibold">1.500&nbsp;€</td>
-          <td class="py-3 pr-4 text-right text-gray-300">105</td>
+          <td class="py-3 pr-4 text-right text-gray-300">107</td>
           <td class="py-3 pr-4 text-right text-gray-300">90+</td>
         </tr>
       
         <tr class="hover:bg-white/5">
           <td class="py-3 pr-4 pl-3 text-gray-200 max-w-[420px] truncate">VAMPIRE STUDIO SL</td>
           <td class="py-3 pr-4 text-right font-semibold">1.430&nbsp;€</td>
-          <td class="py-3 pr-4 text-right text-gray-300">109</td>
+          <td class="py-3 pr-4 text-right text-gray-300">111</td>
           <td class="py-3 pr-4 text-right text-gray-300">90+</td>
         </tr>
       </tbody>
@@ -2643,6 +2650,12 @@ const bucket = BU_LABELS[bucketUpper] || null;
       const root = document.documentElement.cloneNode(true);
       root.querySelectorAll('[data-aging-sort-ready]').forEach(el => el.removeAttribute('data-aging-sort-ready'));
       root.querySelectorAll('[data-ready]').forEach(el => el.removeAttribute('data-ready'));
+
+      // En el viewer exportado, ocultar los botones de carga y exportación
+      ['loadExcelBtn', 'exportHtmlBtn', 'restoreEmbeddedBtn'].forEach(id => {
+        const el = root.querySelector('#' + id);
+        if (el) el.classList.add('hidden');
+      });
 
       let out = '<!DOCTYPE html>\n' + root.outerHTML;
 
